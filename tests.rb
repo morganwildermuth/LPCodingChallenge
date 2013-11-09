@@ -6,7 +6,6 @@ end
 
 parse_test = Parse.new('data.txt')
 assert(parse_test.instance_of?(Parse))
-assert(parse_test.get_string('meta data', 'description'))
+assert(parse_test.get_string('meta data', 'correction text') == "I meant 'moderately,' not 'tediously,' above.")
 
 puts "And we're green; all tests have passed!"
-
