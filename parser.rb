@@ -41,6 +41,7 @@ class Parse
   end
 
   def get_integer(section, key)
+    @file_hash[section][key].to_i
   end
 
   def get_floating_point(section, key)
