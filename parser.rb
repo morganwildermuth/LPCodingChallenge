@@ -14,8 +14,9 @@ class Parse
     current_key = 'empty'
     file_by_line_array.each do |line|
       if line[0] == '['
-        line_trimmed = line.gsub!(/\s+|\[|\]/, "")
-        file_hash[line_trimmed] = {}
+        line_trimmed = line.gsub!(/\[|\]/, "")
+        line_trimmed = line_trimmed.strip
+        @file_hash[line_trimmed] = {}
       else
         unless line[0] == "\n" 
           line = line.delete("\n")
