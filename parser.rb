@@ -25,11 +25,11 @@ class Parse
               key_value_pair = line.split(':')
               key = key_value_pair[0].strip
               value = key_value_pair[1].strip
-              file_hash[line_trimmed][key] = value
+              @file_hash[line_trimmed][key] = value
               current_key = key
             end
           else
-            file_hash[line_trimmed][current_key] = file_hash[line_trimmed][current_key] + line
+            @file_hash[line_trimmed][current_key] = @file_hash[line_trimmed][current_key] + line
           end
         end
       end
@@ -37,6 +37,7 @@ class Parse
   end
 
   def get_string(section, key)
+    @file_hash[section][key]
   end
 
   def get_integer(section, key)
