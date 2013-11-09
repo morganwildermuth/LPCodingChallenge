@@ -1,5 +1,8 @@
 class Parse
+  attr_reader :file
+
   def initialize(file)
+    @file = File.open(file)
   end
 
   def get_string(section, key)
