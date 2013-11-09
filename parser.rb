@@ -44,7 +44,7 @@ class Parse
     @file_hash[section][key].to_i
   end
 
-  def get_floating_point(section, key)
+  def get_float(section, key)
   end
 
   def set_string(section, key)
