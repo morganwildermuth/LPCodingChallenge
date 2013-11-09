@@ -1,5 +1,5 @@
 class Parse
-  attr_reader :file, :file_by_line_array, :file_to_hash
+  attr_reader :file, :file_by_line_array, :file_hash
 
   def initialize(file)
     @file = file
