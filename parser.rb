@@ -44,19 +44,27 @@ class Parse
   end
 
   def get_string(section, key)
-    if file_hash.has_key?(section) && file_hash[section].has_key?(key)
-      file_hash[section][key]
+    if item_exists?(section, key)
+      return_item(section, key)
     else
       "No such item." 
     end
   end
 
   def get_integer(section, key)
-    file_hash[section][key].to_i
+    if item_exists?(section, key)
+      return_item(section, key).to_i
+    else
+      "No such item." 
+    end
   end
 
   def get_float(section, key)
-    file_hash[section][key].to_f
+    if item_exists?(section, key)
+      return_item(section, key).to_f
+    else
+      "No such item." 
+    end
   end
 
   def add_value(section, key, value)
