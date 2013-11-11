@@ -52,6 +52,10 @@ class Parse
   end
 
   def set_string(section, key, value)
+    File.open(file, "a") do |file| 
+      file.puts('[' + section + ']') 
+      file.puts(key + ':' + value) 
+    end
   end
 
   def set_integer(section, key, value)
