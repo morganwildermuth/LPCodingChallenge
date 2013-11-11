@@ -11,7 +11,7 @@ assert(parse_test.get_string('meta data', 'correction text') == "I meant 'modera
 assert(parse_test.get_integer('header', 'budget') == 4)
 assert(parse_test.get_float('header', 'budget') == 4.5)
 
-parse_text.set_string('priorities', 'mindset', 'constant learner')
+parse_test.set_string('priorities', 'mindset', 'constant learner')
 
 assert(parse_test.get_string('top priority', 'mindset') == 'constant learner')
 
