@@ -35,6 +35,14 @@ class Parse
     end
   end
 
+  def item_exists?(section, key)
+    file_hash.has_key?(section) && file_hash[section].has_key?(key)
+  end
+
+  def return_item(section, key)
+    file_hash[section][key]
+  end
+
   def get_string(section, key)
     if file_hash.has_key?(section) && file_hash[section].has_key?(key)
       file_hash[section][key]
