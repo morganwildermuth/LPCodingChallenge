@@ -51,16 +51,10 @@ class Parse
     file_hash[section][key].to_f
   end
 
-  def set_string(section, key, value)
+  def add_value(section, key, value)
     File.open(file, "a") do |file| 
       file.puts('[' + section + ']') 
       file.puts(key + ':' + value) 
     end
-  end
-
-  def set_integer(section, key, value)
-  end
-
-  def set_floating_point(section, key, value)
   end
 end
