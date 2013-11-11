@@ -36,7 +36,11 @@ class Parse
   end
 
   def get_string(section, key)
-    file_hash[section][key]
+    if file_hash.has_key?(section) && file_hash[section].has_key?(key)
+      file_hash[section][key]
+    else
+      "No such item." 
+    end
   end
 
   def get_integer(section, key)
