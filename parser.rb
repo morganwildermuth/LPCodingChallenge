@@ -36,23 +36,23 @@ class Parse
   end
 
   def get_string(section, key)
-    @file_hash[section][key]
+    file_hash[section][key]
   end
 
   def get_integer(section, key)
-    @file_hash[section][key].to_i
+    file_hash[section][key].to_i
   end
 
   def get_float(section, key)
-    @file_hash[section][key].to_f
+    file_hash[section][key].to_f
   end
 
-  def set_string(section, key)
+  def set_string(section, key, value)
   end
 
-  def set_integer(section, key)
+  def set_integer(section, key, value)
   end
 
-  def set_floating_point(section, key)
+  def set_floating_point(section, key, value)
   end
 end
