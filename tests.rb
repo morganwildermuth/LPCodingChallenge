@@ -29,7 +29,7 @@ parse_test.add_value('extra priorities data', 'mindset degree of awesome', '10.0
 parse_test = Parse.new(test_file)
 
 assert(parse_test.get_string('priorities', 'mindset') == 'constant learner')
-assert(parse_test.get_string('priorities', 'attitude') == 'can do')
+# assert(parse_test.get_string('priorities', 'attitude') == 'can do')
 assert(parse_test.get_integer('extra priorities data', 'mindset degree of awesome') == 10)
 assert(parse_test.get_float('extra priorities data', 'mindset degree of awesome') == 10.01)
 
