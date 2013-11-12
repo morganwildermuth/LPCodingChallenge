@@ -1,14 +1,14 @@
 class Parse
-  attr_reader :file, :file_by_line_array, :file_hash
+  attr_reader :file, :file_hash
 
   def initialize(file)
     @file = file
     @file_hash = {}
-    @file_by_line_array = IO.readlines(file)
     file_to_hash
   end
 
   def file_to_hash
+    file_by_line_array = IO.readlines(file)
     current_section = 'empty'
     current_key = 'empty'
     file_by_line_array.each do |line|
