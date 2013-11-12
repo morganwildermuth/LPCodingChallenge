@@ -79,9 +79,14 @@ class Parse
   end
 
   def add_value(section, key, value)
-    File.open(file, "a") do |file| 
-      file.puts('[' + section + ']') 
-      file.puts(key + ':' + value) 
+    if file_hash[section].nil?
+      file_hash[section] = {key => value}
+      hash_to_file
+    else
+      current_hash = file_hash[section]
+      current_hash[key] = value
+      file_hash[section] = current_hash
+      hash_to_file
     end
   end
 end
