@@ -40,12 +40,20 @@ class Parse
     key_value_pair = line.split(':')
     key = key_value_pair[0].strip
     value = key_value_pair[1].strip
-    value.include?(".") ? value = value.to_f : value = value.to_i if is_a_number?(value)
+    value = number_or_string(value)
     [key, value]
   end
 
   def is_a_number?(string)
     string == "0" || string.to_f != 0.0
+  end
+
+  def number_or_string(string)
+    if is_a_number?(string)
+      string.include?(".") ? string = string.to_f : string = string.to_i if is_a_number?(string)
+    else
+      string
+    end
   end
 
   def hash_to_file
@@ -92,6 +100,8 @@ class Parse
   end
 
   def add_value(section, key, value)
+    value = number_or_string(value)
+    key = number_or_string(key)
     if file_hash[section].nil?
       file_hash[section] = {key => value}
       hash_to_file
