@@ -9,21 +9,22 @@ class Parse
   end
 
   def file_to_hash
-    line_trimmed = 'empty'
+    current_section = 'empty'
     current_key = 'empty'
     file_by_line_array.each do |line|
       if line[0] == '['
-        line_trimmed = parse_section(line)
-        file_hash[line_trimmed] = {}
+        current_section = parse_section(line)
+        file_hash[current_section] = {}
       else
         unless line[0] == "\n" 
           line = line.delete("\n")
           if line.include?(":")
             key_value = parse_key_value(line)
-            file_hash[line_trimmed][key_value[0]] = key_value[1]
+            file_hash[current_section][key_value[0]] = key_value[1]
             current_key = key_value[0]
           else
-            file_hash[line_trimmed][current_key] = file_hash[line_trimmed][current_key] + line
+            wrapped_line = line
+            file_hash[current_section][current_key] = file_hash[current_section][current_key] + wrapped_line
           end
         end
       end
