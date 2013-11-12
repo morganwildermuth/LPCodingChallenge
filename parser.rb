@@ -40,14 +40,12 @@ class Parse
     key_value_pair = line.split(':')
     key = key_value_pair[0].strip
     value = key_value_pair[1].strip
-    if value == "0" || value.to_f != 0.0
-      if value.include?(".")
-        value = value.to_f
-      else
-        value = value.to_i
-      end
-    end
+    value.include?(".") ? value = value.to_f : value = value.to_i if is_a_number?(value)
     [key, value]
+  end
+
+  def is_a_number?(string)
+    string == "0" || string.to_f != 0.0
   end
 
   def hash_to_file
