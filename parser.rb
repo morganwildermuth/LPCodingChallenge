@@ -40,6 +40,9 @@ class Parse
     key_value_pair = line.split(':')
     key = key_value_pair[0].strip
     value = key_value_pair[1].strip
+    if value == "0" || value.to_f != 0.0
+      value = value.to_f
+    end
     [key, value]
   end
 
