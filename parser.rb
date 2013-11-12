@@ -9,8 +9,7 @@ class Parse
 
   def file_to_hash
     file_by_line_array = IO.readlines(file)
-    current_section = 'empty'
-    current_key = 'empty'
+    current_section, current_key = 'empty'
     file_by_line_array.each do |line|
       if line[0] == '['
         current_section = parse_section(line)
@@ -46,7 +45,7 @@ class Parse
 
   def number_or_string(string)
     if is_a_number?(string)
-      string.include?(".") ? string = string.to_f : string = string.to_i if is_a_number?(string)
+      string.include?(".") ? string.to_f : string.to_i if is_a_number?(string)
     else
       string
     end
@@ -54,6 +53,18 @@ class Parse
 
   def is_a_number?(string)
     string == "0" || string.to_f != 0.0
+  end
+
+  def get_item(section, key, type = "given")
+    if type != "given"
+      transform_item(section, key, type)
+    else
+      if item_exists?(section, key)
+        return_item(section, key)
+      else
+        "No such item."
+      end
+    end
   end
 
   def transform_item(section, key, type)
@@ -67,18 +78,6 @@ class Parse
       item.to_i
     when "given"
       item
-    end
-  end
-
-  def get_item(section, key, type = "given")
-    if type != "given"
-      transform_item(section, key, type)
-    else
-      if item_exists?(section, key)
-        return_item(section, key)
-      else
-        "No such item."
-      end
     end
   end
 
