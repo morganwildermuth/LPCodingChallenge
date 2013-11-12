@@ -44,10 +44,6 @@ class Parse
     [key, value]
   end
 
-  def is_a_number?(string)
-    string == "0" || string.to_f != 0.0
-  end
-
   def number_or_string(string)
     if is_a_number?(string)
       string.include?(".") ? string = string.to_f : string = string.to_i if is_a_number?(string)
@@ -56,23 +52,8 @@ class Parse
     end
   end
 
-  def hash_to_file
-    File.open(file, "w") do |file|
-      file_hash.each do |key, value|
-        file.puts("[#{key}]")
-        value.each do |key, value|
-          file.puts("#{key}: #{value}")
-        end
-      end
-    end
-  end
-
-  def item_exists?(section, key)
-    file_hash.has_key?(section) && file_hash[section].has_key?(key)
-  end
-
-  def return_item(section, key)
-    file_hash[section][key]
+  def is_a_number?(string)
+    string == "0" || string.to_f != 0.0
   end
 
   def transform_item(section, key, type)
@@ -101,6 +82,14 @@ class Parse
     end
   end
 
+  def item_exists?(section, key)
+    file_hash.has_key?(section) && file_hash[section].has_key?(key)
+  end
+
+  def return_item(section, key)
+    file_hash[section][key]
+  end
+
   def add_value(section, key, value, overwrite = nil)
     value = number_or_string(value)
     key = number_or_string(key)
@@ -113,6 +102,17 @@ class Parse
         current_hash[key] = value
         file_hash[section] = current_hash
         hash_to_file
+      end
+    end
+  end
+
+  def hash_to_file
+    File.open(file, "w") do |file|
+      file_hash.each do |key, value|
+        file.puts("[#{key}]")
+        value.each do |key, value|
+          file.puts("#{key}: #{value}")
+        end
       end
     end
   end
