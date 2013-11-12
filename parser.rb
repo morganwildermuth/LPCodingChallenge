@@ -13,26 +13,33 @@ class Parse
     current_key = 'empty'
     file_by_line_array.each do |line|
       if line[0] == '['
-        line_trimmed = line.gsub!(/\[|\]/, "")
-        line_trimmed = line_trimmed.strip
+        line_trimmed = parse_section(line)
         file_hash[line_trimmed] = {}
       else
         unless line[0] == "\n" 
           line = line.delete("\n")
           if line.include?(":")
-            if !(line.nil?)
-              key_value_pair = line.split(':')
-              key = key_value_pair[0].strip
-              value = key_value_pair[1].strip
-              file_hash[line_trimmed][key] = value
-              current_key = key
-            end
+            key_value = parse_key_value(line)
+            file_hash[line_trimmed][key_value[0]] = key_value[1]
+            current_key = key_value[0]
           else
             file_hash[line_trimmed][current_key] = file_hash[line_trimmed][current_key] + line
           end
         end
       end
     end
+  end
+
+  def parse_section(line)
+    line_trimmed = line.gsub!(/\[|\]/, "")
+    line_trimmed = line_trimmed.strip
+  end
+
+  def parse_key_value(line)
+    key_value_pair = line.split(':')
+    key = key_value_pair[0].strip
+    value = key_value_pair[1].strip
+    [key, value]
   end
 
   def hash_to_file
