@@ -11,13 +11,13 @@ class Parse
     file_by_line_array = IO.readlines(file)
     current_section, current_key = 'empty'
     file_by_line_array.each do |line|
-      if line[0] == '['
+      if is_section?(line[0])
         current_section = parse_section(line)
         file_hash[current_section] = {}
       else
         unless line[0] == "\n" 
           line = line.delete("\n")
-          if line.include?(":")
+          if is_key_value_pair?(line)
             key_value = parse_key_value(line)
             file_hash[current_section][key_value[0]] = key_value[1]
             current_key = key_value[0]
@@ -30,9 +30,17 @@ class Parse
     end
   end
 
+  def is_section?(line)
+    line[0] == '['
+  end
+
   def parse_section(line)
     line_trimmed = line.gsub!(/\[|\]/, "")
     line_trimmed = line_trimmed.strip
+  end
+
+  def is_key_value_pair?(line)
+    line.include?(":")
   end
 
   def parse_key_value(line)
@@ -76,8 +84,6 @@ class Parse
       item.to_f
     when "integer"
       item.to_i
-    when "given"
-      item
     end
   end
 
@@ -92,17 +98,21 @@ class Parse
   def add_value(section, key, value, overwrite = nil)
     value = number_or_string(value)
     key = number_or_string(key)
-    if file_hash[section].nil?
+    if new?(section)
       file_hash[section] = {key => value}
       hash_to_file
     else
-      current_hash = file_hash[section]
-      if current_hash[key].nil? || overwrite == 'overwrite'
-        current_hash[key] = value
-        file_hash[section] = current_hash
+      current_section_hash = file_hash[section]
+      if current_section_hash[key].nil? || overwrite == 'overwrite'
+        current_section_hash[key] = value
+        file_hash[section] = current_section_hash
         hash_to_file
       end
     end
+  end
+
+  def new?(section)
+    file_hash[section].nil?
   end
 
   def hash_to_file
