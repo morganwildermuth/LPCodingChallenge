@@ -75,25 +75,23 @@ class Parse
     file_hash[section][key]
   end
 
-  def get_string(section, key)
+  def transform_item(section, key, type = "given")
+    item = return_item(section, key)
+    case type
+    when "string"
+      item.to_s
+    when "float"
+      item.to_f
+    when "integer"
+      item.to_i
+    when "given"
+      item
+    end
+  end
+
+  def return_item(section, key)
     if item_exists?(section, key)
       return_item(section, key)
-    else
-      "No such item." 
-    end
-  end
-
-  def get_integer(section, key)
-    if item_exists?(section, key)
-      return_item(section, key).to_i
-    else
-      "No such item." 
-    end
-  end
-
-  def get_float(section, key)
-    if item_exists?(section, key)
-      return_item(section, key).to_f
     else
       "No such item." 
     end
