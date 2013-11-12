@@ -1,11 +1,11 @@
 require_relative "parser.rb"
 require_relative "test_methods.rb"
 
+#set-up for tests
 test_file = 'data.txt'
-
-# tests for getting initial values
 parse_test = Parse.new(test_file)
 
+# tests for getting initial values
 assert(parse_test.get_item('meta data', 'correction text') == "I meant 'moderately,' not 'tediously,' above.")
 assert(parse_test.get_item('header', 'accessed') == 205)
 assert(parse_test.get_item('header', 'budget') == 4.5)
@@ -26,10 +26,17 @@ assert(parse_test.get_item('header', 'accessed', 'string') == "205")
 assert(parse_test.get_item('priorities', 'mindset', 'integer') == 0)
 assert(parse_test.get_item('priorities', 'mindset', 'float') == 0.0)
 
-#tests for resetting test data
+#test overwrite feature
+parse_test.add_value('priorities', 'mindset', 'oompa loompa', 'overwrite')
+parse_test.add_value('priorities', 'mindset', 'stranger in a strange land')
+
+assert(parse_test.get_item('priorities', 'mindset') == 'oompa loompa')
+
+#set-up for resetting test data
 reset_test_data(test_file)
 parse_test = Parse.new(test_file)
 
+#tests for resetting test data success
 assert(parse_test.get_item('priorities', 'mindset') == 'No such item.')
 
 puts "And we're green; all tests have passed!"

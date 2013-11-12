@@ -101,7 +101,7 @@ class Parse
     end
   end
 
-  def add_value(section, key, value)
+  def add_value(section, key, value, overwrite = nil)
     value = number_or_string(value)
     key = number_or_string(key)
     if file_hash[section].nil?
@@ -109,9 +109,11 @@ class Parse
       hash_to_file
     else
       current_hash = file_hash[section]
-      current_hash[key] = value
-      file_hash[section] = current_hash
-      hash_to_file
+      if current_hash[key].nil? || overwrite == 'overwrite'
+        current_hash[key] = value
+        file_hash[section] = current_hash
+        hash_to_file
+      end
     end
   end
 end
