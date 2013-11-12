@@ -41,7 +41,11 @@ class Parse
     key = key_value_pair[0].strip
     value = key_value_pair[1].strip
     if value == "0" || value.to_f != 0.0
-      value = value.to_f
+      if value.include?(".")
+        value = value.to_f
+      else
+        value = value.to_i
+      end
     end
     [key, value]
   end
