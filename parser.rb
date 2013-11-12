@@ -35,6 +35,17 @@ class Parse
     end
   end
 
+  def hash_to_file
+    File.open(file, "w") do |file|
+      file_hash.each do |key, value|
+        file.puts("[#{key}]")
+        value.each do |key, value|
+          file.puts("#{key}: #{value}")
+        end
+      end
+    end
+  end
+
   def item_exists?(section, key)
     file_hash.has_key?(section) && file_hash[section].has_key?(key)
   end
