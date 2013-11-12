@@ -23,6 +23,8 @@ assert(parse_test.get_item('extra priorities data', 'mindset degree of awesome')
 assert(parse_test.get_item('header', 'budget', 'integer') == 4)
 assert(parse_test.get_item('header', 'accessed', 'float') == 205.0)
 assert(parse_test.get_item('header', 'accessed', 'string') == "205")
+assert(parse_test.get_item('priorities', 'mindset', 'integer') == 0)
+assert(parse_test.get_item('priorities', 'mindset', 'float') == 0.0)
 
 #tests for resetting test data
 reset_test_data(test_file)

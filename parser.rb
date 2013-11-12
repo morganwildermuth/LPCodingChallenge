@@ -75,8 +75,8 @@ class Parse
     file_hash[section][key]
   end
 
-  def transform_item(section, key, type = "given")
-    item = return_item(section, key)
+  def transform_item(section, key, type)
+    item = get_item(section, key)
     case type
     when "string"
       item.to_s
@@ -89,11 +89,15 @@ class Parse
     end
   end
 
-  def return_item(section, key)
-    if item_exists?(section, key)
-      return_item(section, key)
+  def get_item(section, key, type = "given")
+    if type != "given"
+      transform_item(section, key, type)
     else
-      "No such item." 
+      if item_exists?(section, key)
+        return_item(section, key)
+      else
+        "No such item."
+      end
     end
   end
 
