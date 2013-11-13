@@ -26,9 +26,9 @@ class LineParser
 
   def parse_key_value
     key_value_pair = content.split(':')
-    key = key_value_pair[0].strip
-    value = key_value_pair[1].strip
-    value = value.format
+    key_value_pair.map!{|e| e.strip}
+    key = key_value_pair[0].format
+    value = key_value_pair[1].format
     [key, value]
   end
 end
