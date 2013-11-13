@@ -12,6 +12,7 @@ class TextParser
   def file_to_hash
     file_by_line_array = IO.readlines(file)
     current_section = nil
+    current_key = nil
     file_by_line_array.each do |line|
       line = LineParser.new(line)
       if line.is_section?
