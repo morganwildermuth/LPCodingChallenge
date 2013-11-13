@@ -10,30 +10,50 @@ class TextParser
   end
 
   def file_to_hash
-    file_by_line_array = IO.readlines(file)
     current_section = nil
     current_key = nil
+    file_by_line_array = IO.readlines(file)
     file_by_line_array.each do |line|
       line = LineParser.new(line)
-      if line.is_section?
-        current_section = set_section(line)
-      else
-        unless line.is_blank_line?
-          line.content.delete!("\n")
-          if line.is_key_value_pair?
-            current_key = set_key_value(line, current_section)
-          else
-            set_wrapped_value(line, current_section, current_key)
-          end
-        end
-      end
+      current_section = build_section(line, current_section)
+      current_key = build_key_value_pair(line, current_section, current_key)
     end
+  end
+
+  def build_section(line, current_section)
+    if line.is_section?
+      set_section(line)
+    else
+      current_section
+    end
+  end
+
+
+  def build_key_value_pair(line, current_section, current_key)
+    if line.is_key_value_pair?
+      remove_carriage_return(line)
+      set_key_value_and_wrapped_lines(line, current_section, current_key)
+    end
+    current_key
   end
 
   def set_section(line)
     current_section = line.parse_section
     file_hash[current_section] = {}
     current_section
+  end
+
+  def remove_carriage_return(line)
+    line.content.delete!("\n")
+  end
+
+  def set_key_value_and_wrapped_lines(line, current_section, current_key)
+    if line.is_key_value_pair?
+      current_key = set_key_value(line, current_section)
+    else
+      set_wrapped_value(line, current_section, current_key)
+      current_key
+    end
   end
 
   def set_key_value(line, current_section)
@@ -82,21 +102,34 @@ class TextParser
   def add_value(section, key, value, overwrite = false)
     key = key.format
     value = value.format
+    current_section_hash = file_hash[section]
     if new?(section)
-      file_hash[section] = {key => value}
-      hash_to_file
+      add_key_value_to_new_section(section, key, value)
     else
-      current_section_hash = file_hash[section]
       if current_section_hash[key].nil? || overwrite == true
-        current_section_hash[key] = value
-        file_hash[section] = current_section_hash
-        hash_to_file
+        add_new_key_to_existing_section_or_overwrite_value({hash: current_section_hash, key: key, value: value, section: section})
       end
     end
   end
 
   def new?(section)
     file_hash[section].nil?
+  end
+
+  def add_key_value_to_new_section(section, key, value)
+    file_hash[section] = {key => value}
+    hash_to_file
+  end
+
+  def add_new_key_to_existing_section_or_overwrite_value(args)
+    hash = args[:hash]
+    key = args[:key]
+    value = args[:value]
+    section = args[:section]
+
+    hash[key] = value
+    file_hash[section] = hash
+    hash_to_file
   end
 
   def hash_to_file
