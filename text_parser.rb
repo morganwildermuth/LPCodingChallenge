@@ -15,29 +15,15 @@ class TextParser
     file_by_line_array = IO.readlines(file)
     file_by_line_array.each do |line|
       line = LineParser.new(line)
-      current_section = build_section(line, current_section)
-      current_key = build_key_value_pair(line, current_section, current_key)
+      if line.is_section?
+        current_section = set_section(line, current_section)
+      else
+        current_key = set_key_value_and_wrapped_lines(line, current_section, current_key)
+      end
     end
   end
 
-  def build_section(line, current_section)
-    if line.is_section?
-      set_section(line)
-    else
-      current_section
-    end
-  end
-
-
-  def build_key_value_pair(line, current_section, current_key)
-    if line.is_key_value_pair?
-      remove_carriage_return(line)
-      set_key_value_and_wrapped_lines(line, current_section, current_key)
-    end
-    current_key
-  end
-
-  def set_section(line)
+  def set_section(line, current_section)
     current_section = line.parse_section
     file_hash[current_section] = {}
     current_section
