@@ -36,7 +36,4 @@ assert(parse_test.get_item('priorities', 'mindset') == 'oompa loompa')
 reset_test_data(test_file)
 parse_test = TextParser.new(test_file)
 
-#tests for resetting test data success
-assert(parse_test.get_item('priorities', 'mindset') == 'No such item.')
-
 puts "And we're green; all tests have passed!"
