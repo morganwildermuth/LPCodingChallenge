@@ -27,7 +27,7 @@ assert(parse_test.get_item('priorities', 'mindset', 'integer') == 0)
 assert(parse_test.get_item('priorities', 'mindset', 'float') == 0.0)
 
 #test overwrite feature
-parse_test.add_value('priorities', 'mindset', 'oompa loompa', 'overwrite')
+parse_test.add_value('priorities', 'mindset', 'oompa loompa', 'true')
 parse_test.add_value('priorities', 'mindset', 'stranger in a strange land')
 
 assert(parse_test.get_item('priorities', 'mindset') == 'oompa loompa')

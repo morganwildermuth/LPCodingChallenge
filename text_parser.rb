@@ -79,7 +79,7 @@ class TextParser
     file_hash[section][key]
   end
 
-  def add_value(section, key, value, overwrite = nil)
+  def add_value(section, key, value, overwrite = false)
     key = key.format
     value = value.format
     if new?(section)
@@ -87,7 +87,7 @@ class TextParser
       hash_to_file
     else
       current_section_hash = file_hash[section]
-      if current_section_hash[key].nil? || overwrite == 'overwrite'
+      if current_section_hash[key].nil? || overwrite == true
         current_section_hash[key] = value
         file_hash[section] = current_section_hash
         hash_to_file
