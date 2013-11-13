@@ -1,9 +1,9 @@
-require_relative "parser.rb"
+require_relative "text_parser.rb"
 require_relative "test_methods.rb"
 
 #set-up for tests
 test_file = 'data.txt'
-parse_test = Parse.new(test_file)
+parse_test = TextParser.new(test_file)
 
 # tests for getting initial values
 assert(parse_test.get_item('meta data', 'correction text') == "I meant 'moderately,' not 'tediously,' above.")
@@ -34,7 +34,7 @@ assert(parse_test.get_item('priorities', 'mindset') == 'oompa loompa')
 
 #set-up for resetting test data
 reset_test_data(test_file)
-parse_test = Parse.new(test_file)
+parse_test = TextParser.new(test_file)
 
 #tests for resetting test data success
 assert(parse_test.get_item('priorities', 'mindset') == 'No such item.')
