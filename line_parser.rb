@@ -21,7 +21,7 @@ class LineParser
   end
 
   def is_key_value_pair?
-    content.include?(":")
+    content.include?(":") && !(self.is_blank_line?)
   end
 
   def parse_key_value
