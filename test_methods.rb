@@ -1,5 +1,5 @@
 def assert(arg)
-  raise 'and we got a failure' unless arg
+  raise 'red blinking lights of doom: aka you have a failing test' unless arg
 end
 
 def reset_test_data(file)
