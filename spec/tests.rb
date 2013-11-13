@@ -1,4 +1,4 @@
-require_relative "text_parser.rb"
+require_relative "../text_parser.rb"
 require_relative "test_methods.rb"
 
 #set-up for tests
