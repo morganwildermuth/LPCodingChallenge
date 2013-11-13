@@ -20,9 +20,9 @@ class TextParser
         unless line.is_blank_line?
           line.content.delete!("\n")
           if line.is_key_value_pair?
-            set_key_value(line, current_section)
+            current_key = set_key_value(line, current_section)
           else
-            set_wrapped_value(line, current_section)
+            set_wrapped_value(line, current_section, current_key)
           end
         end
       end
@@ -38,11 +38,12 @@ class TextParser
   def set_key_value(line, current_section)
     key_value = line.parse_key_value
     file_hash[current_section][key_value[0]] = key_value[1]
-    current_key = key_value[0]
+    key_value[0]
   end
 
-  def set_wrapped_value(line, current_section)
-    file_hash[current_section][current_key] = file_hash[current_section][current_key] + wrapped_line
+  def set_wrapped_value(line, current_section, current_key)
+    line = line.content
+    file_hash[current_section][current_key] = file_hash[current_section][current_key] + line
   end
 
   def get_item(section, key, type = "given")
