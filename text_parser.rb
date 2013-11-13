@@ -17,7 +17,7 @@ class TextParser
       line = LineParser.new(line)
       if line.is_section?
         current_section = set_section(line, current_section)
-      else
+      elsif line.is_key_value_pair?
         current_key = set_key_value_and_wrapped_lines(line, current_section, current_key)
       end
     end
@@ -27,10 +27,6 @@ class TextParser
     current_section = line.parse_section
     file_hash[current_section] = {}
     current_section
-  end
-
-  def remove_carriage_return(line)
-    line.content.delete!("\n")
   end
 
   def set_key_value_and_wrapped_lines(line, current_section, current_key)
