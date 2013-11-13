@@ -11,8 +11,7 @@ class TextParser
 
   def file_to_hash
     file_by_line_array = IO.readlines(file)
-    current_section = 'empty'
-    current_key = 'empty'
+    current_section = nil
     file_by_line_array.each do |line|
       line = LineParser.new(line)
       if line.is_section?
@@ -21,12 +20,9 @@ class TextParser
         unless line.is_blank_line?
           line.content.delete!("\n")
           if line.is_key_value_pair?
-            key_value = line.parse_key_value
-            file_hash[current_section][key_value[0]] = key_value[1]
-            current_key = key_value[0]
+            set_key_value(line, current_section)
           else
-            wrapped_line = line.content
-            file_hash[current_section][current_key] = file_hash[current_section][current_key] + wrapped_line
+            set_wrapped_value(line, current_section)
           end
         end
       end
@@ -37,6 +33,16 @@ class TextParser
     current_section = line.parse_section
     file_hash[current_section] = {}
     current_section
+  end
+
+  def set_key_value(line, current_section)
+    key_value = line.parse_key_value
+    file_hash[current_section][key_value[0]] = key_value[1]
+    current_key = key_value[0]
+  end
+
+  def set_wrapped_value(line, current_section)
+    file_hash[current_section][current_key] = file_hash[current_section][current_key] + wrapped_line
   end
 
   def get_item(section, key, type = "given")
