@@ -54,7 +54,7 @@ class TextParser
       if item_exists?(section, key)
         return_item(section, key)
       else
-        "No such item."
+        raise "No such item."
       end
     end
   end
