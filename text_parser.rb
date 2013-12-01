@@ -19,6 +19,8 @@ class TextParser
         current_section = set_section(line, current_section)
       elsif line.is_key_value_pair?
         current_key = set_key_value_and_wrapped_lines(line, current_section, current_key)
+      elsif !(line.is_blank_line?)
+        set_key_value_and_wrapped_lines(line, current_section, current_key)
       end
     end
   end
@@ -45,7 +47,7 @@ class TextParser
   end
 
   def set_wrapped_value(line, current_section, current_key)
-    line = line.content
+    line = line.style_wrapped_value.content
     file_hash[current_section][current_key] = file_hash[current_section][current_key] + line
   end
 

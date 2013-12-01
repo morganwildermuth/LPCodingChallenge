@@ -31,4 +31,10 @@ class LineParser
     value = key_value_pair[1].format
     [key, value]
   end
+
+  def style_wrapped_value
+    content.chomp!
+    content[0] = ""
+    self
+  end
 end
