@@ -1,8 +1,9 @@
-require_relative "../text_parser.rb"
-require_relative "test_methods.rb"
+require_relative "test_methods"
+require_relative "../text_parser"
 
+puts Dir.pwd
 #set-up for tests
-test_file = 'data.txt'
+test_file = 'spec/data.txt'
 parse_test = TextParser.new(test_file)
 
 # tests for getting initial values

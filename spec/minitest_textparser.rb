@@ -3,9 +3,9 @@ require_relative "test_methods"
 require_relative "../text_parser"
 
 class TestTextParser < MiniTest::Unit::TestCase
-  attr_reader :parse_test
+  attr_reader :parse_test, :test_file
   def setup
-    test_file = 'spec/data.txt'
+    @test_file = 'spec/data.txt'
     @parse_test = TextParser.new(test_file)
   end
 
@@ -36,9 +36,5 @@ class TestTextParser < MiniTest::Unit::TestCase
     parse_test.add_value('priorities', 'mindset', 'oompa loompa', true)
     parse_test.add_value('priorities', 'mindset', 'stranger in a strange land')
     assert_equal 'oompa loompa', parse_test.get_item('priorities', 'mindset')
-  end
-
-  def teardown
-    reset_test_data(test_file)
   end
 end
