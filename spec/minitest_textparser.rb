@@ -11,7 +11,7 @@ class TestTextParser < MiniTest::Test
   end
 
   def test_getting_initial_value_of_file
-    assert_equal "This is a tediously long description of the Lonely Planet programming test that you are taking. Tedious isn't the right word, but it's the first word that comes to mind.", parse_test.get_item('meta data', 'description')
+    assert_equal "This is a tediously long description of the Lonely Planet programming test that you are taking. Tedious isn't the right word, but it's the first word that comes to mind. Perhaps the word we're looking for is: slightly?", parse_test.get_item('meta data', 'description')
     assert_equal "I meant 'moderately,' not 'tediously,' above.", parse_test.get_item('meta data', 'correction text')
     assert_equal 205, parse_test.get_item('header', 'accessed')
     assert_equal 4.5, parse_test.get_item('header', 'budget') 
