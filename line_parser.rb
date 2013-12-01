@@ -20,6 +20,10 @@ class LineParser
     content[0] == "\n"
   end
 
+  def is_wrapped_line?
+    content[0..1] == "  "
+  end
+
   def is_key_value_pair?
     content.include?(":") && !(self.is_blank_line?)
   end
