@@ -8,6 +8,6 @@ class String
   end
 
   def is_a_number?
-    self == "0" || self.to_f != 0.0
+    self =~ /\A\d+\.?\d+$/ ? true : false
   end
 end
