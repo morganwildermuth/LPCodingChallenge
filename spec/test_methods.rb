@@ -1,7 +1,3 @@
-def assert(arg)
-  raise 'red blinking lights of doom: aka you have a failing test' unless arg
-end
-
 def reset_test_data(file)
   test_file = file 
   file_by_line_array = File.readlines(test_file)
