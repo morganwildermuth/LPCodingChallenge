@@ -4,10 +4,11 @@ require_relative "test_methods"
 require_relative "../text_parser"
 
 class TestTextParser < MiniTest::Test
-  attr_reader :parse_test, :test_file
+  attr_reader :parse_test, :file
   def setup
-    @test_file = 'spec/data.txt'
-    @parse_test = TextParser.new(test_file)
+    @file = 'spec/data.txt'
+    create_test_data(file)
+    @parse_test = TextParser.new(file + "1")
   end
 
   def test_getting_initial_value_of_file
@@ -26,7 +27,6 @@ class TestTextParser < MiniTest::Test
     assert_equal 'can do', parse_test.get_item('priorities', 'attitude') 
     assert_equal 'tests make things not break; who does not like that?', parse_test.get_item('header', 'final thought')
     assert_equal 10.01, parse_test.get_item('extra priorities data', 'mindset degree of awesome')
-    reset_test_data(test_file)
   end
 
   def test_retrieving_values_in_different_format_than_saved
@@ -39,6 +39,9 @@ class TestTextParser < MiniTest::Test
     parse_test.add_value('priorities', 'mindset', 'oompa loompa', true)
     parse_test.add_value('priorities', 'mindset', 'stranger in a strange land')
     assert_equal 'oompa loompa', parse_test.get_item('priorities', 'mindset')
-    reset_test_data(test_file)
+  end
+
+  def after
+    create_test_data(file)
   end
 end
