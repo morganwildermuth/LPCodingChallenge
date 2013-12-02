@@ -8,6 +8,6 @@ class String
   end
 
   def is_a_number?
-    self =~ /\A\d+\.?\d+$/ ? true : false
+    self =~ /\A\.?\d+\.?\d*$/ ? true : false
   end
 end
