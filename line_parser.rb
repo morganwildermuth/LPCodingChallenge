@@ -21,7 +21,7 @@ class LineParser
   end
 
   def is_wrapped_line?
-    content[0..1] == "  "
+    content.chr == " "
   end
 
   def is_key_value_pair?
