@@ -1,14 +1,13 @@
 gem "minitest"
 require "minitest/autorun"
-require_relative "test_methods"
+require "fileutils"
 require_relative "../text_parser"
 
 class TestTextParser < MiniTest::Test
   attr_reader :parse_test, :file
   def setup
-    @file = 'spec/data.txt'
-    create_test_data(file)
-    @parse_test = TextParser.new(file + "1")
+    FileUtils.cp 'spec/data.txt', 'spec/test.txt'
+    @parse_test = TextParser.new('spec/test.txt')
   end
 
   def test_getting_initial_value_of_file
