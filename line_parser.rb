@@ -17,7 +17,7 @@ class LineParser
   end
 
   def is_blank_line?
-    content[0] == "\n"
+    content =~ /\A\s+/ ? true : false
   end
 
   def is_wrapped_line?
